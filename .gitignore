@@ -1,0 +1,23 @@
+logs
+
+# Gradle
+.gradle/
+build/
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+*.ipr
+*.iws
+out
+
+# Eclipse files
+.settings
+.project
+.classpath
+.projectbuild
+bin
+
+# IDE
+*.sublime-project
+*.sublime-workspace
