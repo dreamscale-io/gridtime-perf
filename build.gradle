@@ -15,17 +15,14 @@ repositories {
 }
 
 // intellij bundles slf4j-api and failure to exclude invites linkage errors...
-configurations.all {
-  exclude group: "org.slf4j", module: "slf4j-api"
-}
 
 dependencies {
     compile "org.dreamscale:gridtime-rest-client:${gridtimeVersion}"
     compileOnly "org.projectlombok:lombok:1.18.2"
 
     testCompile "org.dreamscale:gridtime-rest-client-test:${gridtimeVersion}"
-    testCompile "org.slf4j:slf4j-api:1.7.12"
-    testCompile "com.google.guava:guava:18.0"
+    compile "org.slf4j:slf4j-api:1.7.12"
+    compile "com.google.guava:guava:18.0"
     testCompile "org.reflections:reflections:0.9.9-RC1"
     testCompile "cglib:cglib-nodep:3.2.0"
     testCompile "org.objenesis:objenesis:1.3"
