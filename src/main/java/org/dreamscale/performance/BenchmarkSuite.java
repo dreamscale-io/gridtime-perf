@@ -1,8 +1,11 @@
 package org.dreamscale.performance;
 
 import org.dreamscale.performance.client.GridtimeClientFactory;
+import org.dreamscale.performance.config.UserAccountDto;
 import org.dreamscale.performance.workflow.LearningCircuitStateWorkflow;
 import org.dreamscale.performance.workflow.TorchieStartupWorkflow;
+
+import java.util.List;
 
 public class BenchmarkSuite {
 
@@ -10,8 +13,8 @@ public class BenchmarkSuite {
     private LearningCircuitStateWorkflow learningCircuitWorkflow;
     private TorchieStartupWorkflow torchieStartupWorkflow;
 
-    public void setup(String serverUri, String apiKey) {
-        gridtimeClientFactory = new GridtimeClientFactory(serverUri, apiKey);
+    public void setup(String serverUri, List<UserAccountDto> users) {
+        gridtimeClientFactory = new GridtimeClientFactory(serverUri, users);
 
         learningCircuitWorkflow = new LearningCircuitStateWorkflow(gridtimeClientFactory);
 

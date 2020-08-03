@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "username": "testuser",
+      "apiKey": "45a3411a6f2146d1a0b91ed2450a35a1"
+    },
+    {
+      "username": "testbob",
+      "apiKey": "45a3411a6f2146d1a0b91ed2450a35a1"
+    },
+    {
+      "username": "testjill",
+      "apiKey": "45a3411a6f2146d1a0b91ed2450a35a1"
+    },
+    {
+      "username": "testgeorge",
+      "apiKey": "45a3411a6f2146d1a0b91ed2450a35a1"
+    },
+    {
+      "username": "testsandy",
+      "apiKey": "45a3411a6f2146d1a0b91ed2450a35a1"
+    }
+  ]
+}
