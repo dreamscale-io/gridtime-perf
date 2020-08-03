@@ -1,9 +1,5 @@
 package org.dreamscale.performance;
 
-import org.dreamscale.performance.client.GridtimeClientFactory;
-import org.dreamscale.performance.workflow.LearningCircuitWorkflow;
-import org.springframework.boot.actuate.metrics.Metric;
-
 import java.util.*;
 
 public class BenchmarkReport {

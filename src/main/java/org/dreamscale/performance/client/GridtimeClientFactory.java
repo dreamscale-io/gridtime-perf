@@ -1,7 +1,6 @@
 package org.dreamscale.performance.client;
 
-import com.dreamscale.gridtime.client.AccountClient;
-import com.dreamscale.gridtime.client.LearningCircuitClient;
+import com.dreamscale.gridtime.client.*;
 import feign.Request;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
@@ -25,6 +24,9 @@ public class GridtimeClientFactory {
         return createClient(serverUri, apiKey, AccountClient.class);
     }
 
+    public JournalClient createJournalClient() {
+        return createClient(serverUri, apiKey, JournalClient.class);
+    }
     public LearningCircuitClient createLearningCircuitClient() {
         return createClient(serverUri, apiKey, LearningCircuitClient.class);
     }
@@ -37,6 +39,23 @@ public class GridtimeClientFactory {
                 .options(new Request.Options(connectTimeoutMillis, readTimeoutMillis))
                 .target(clientClazz, serverUri);
     }
+
+    public TeamClient createTeamClient() {
+        return createClient(serverUri, apiKey, TeamClient.class);
+    }
+
+    public MemberClient createMemberClient() {
+        return createClient(serverUri, apiKey, MemberClient.class);
+    }
+
+    public TalkToClient createTalkToClient() {
+        return createClient(serverUri, apiKey, TalkToClient.class);
+    }
+
+    public TeamCircuitClient createTeamCircuitClient() {
+        return createClient(serverUri, apiKey, TeamCircuitClient.class);
+    }
+
 
     private static class StaticAuthHeaderRequestInterceptor implements RequestInterceptor {
 
