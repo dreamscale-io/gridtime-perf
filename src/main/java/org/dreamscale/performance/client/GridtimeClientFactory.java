@@ -33,6 +33,15 @@ public class GridtimeClientFactory {
         this.activeUser = users.get(0);
     }
 
+    public GridtimeClientFactory(String serverUri, UserAccountDto defaultUser) {
+        this.serverUri = serverUri;
+        this.usersByUsername = new LinkedHashMap<>();
+
+        this.activeUser = defaultUser;
+
+        usersByUsername.put(defaultUser.getUsername(), defaultUser);
+    }
+
     public void changeActiveUser(String userName) {
         activeUser = usersByUsername.get(userName);
     }
@@ -44,6 +53,11 @@ public class GridtimeClientFactory {
     public JournalClient createJournalClient() {
         return createClient(serverUri, activeUser.getApiKey(), JournalClient.class);
     }
+
+    public TerminalClient createTerminalClient() {
+        return createClient(serverUri, activeUser.getApiKey(), TerminalClient.class);
+    }
+
     public LearningCircuitClient createLearningCircuitClient() {
         return createClient(serverUri, activeUser.getApiKey(), LearningCircuitClient.class);
     }

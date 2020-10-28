@@ -32,7 +32,6 @@ public class Benchmark {
 
         System.out.println("server = "+props.getProperty(PROPERTY_SERVER_TARGET));
 
-
         BenchmarkSuite benchmarkSuite = new BenchmarkSuite();
 
         benchmarkSuite.setup(props.getProperty(PROPERTY_SERVER_TARGET), userAccounts.getUsers());
