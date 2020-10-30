@@ -1,12 +1,17 @@
 package org.dreamscale.shell.core;
 
+import com.dreamscale.gridtime.api.account.SimpleStatusDto;
 import com.dreamscale.gridtime.api.circuit.TalkMessageDto;
+import com.dreamscale.gridtime.api.grid.GridStatusSummaryDto;
+import com.dreamscale.gridtime.api.grid.GridTableResults;
 import com.dreamscale.gridtime.api.terminal.*;
 import com.dreamscale.gridtime.client.TerminalClient;
 import org.apache.commons.lang3.StringUtils;
+import org.dreamscale.exception.BadRequestException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class TerminalSession {
 
@@ -25,11 +30,11 @@ public class TerminalSession {
 
         if (discriminator.equalsIgnoreCase("help")) {
             return showHelp(path, args);
-        } if (discriminator.equalsIgnoreCase("exit")) {
-            return "";
         }
 
-        System.out.println("COMMAND!" + " "+discriminator + " "+args);
+        if (discriminator.equalsIgnoreCase("exit")) {
+            return "";
+        }
 
         Command command = null;
         String output = "";
@@ -39,13 +44,32 @@ public class TerminalSession {
 
             TalkMessageDto response = terminalClient.runCommand(new CommandInputDto(command, args));
 
-            System.out.println("RESPONSE!" + " "+response);
-
-            output = response.getData().toString();
+            output = toOutputString(response);
+        } catch (BadRequestException brex) {
+            output = brex.getErrorEntity().getErrorCode() + ": "+ brex.getMessage();
         } catch (IllegalArgumentException ex) {
             output = "Unknown command: "+discriminator;
         }
 
+
+        return output;
+    }
+
+    private String toOutputString(TalkMessageDto response) {
+        String output = "";
+
+        Map<String, Object> props = (Map<String, Object>) response.getData();
+
+        if (response.getMessageType().equals(SimpleStatusDto.class.getSimpleName())) {
+            output = props.get("status") + ": "+ (String) props.get("message");
+        } else if (response.getMessageType().equals(GridTableResults.class.getSimpleName())) {
+            output = (String) props.get("display");
+        } else if (response.getMessageType().equals(GridStatusSummaryDto.class.getSimpleName())) {
+            output = props.get("message") + "\n";
+            output += ((Map<String, Object>) props.get("activitySummary")).get("display");
+        } else {
+            output = props.toString();
+        }
 
         return output;
     }

@@ -54,10 +54,10 @@ public class Shell {
      * You can operate Shell linewise, without entering the command loop.
      * All output is directed to shell's Output.
      *
-     * @see asg.cliche.Output
+     * @see Output
      *
      * @param line Full command line
-     * @throws asg.cliche.CLIException This may be TokenException
+     * @throws CLIException This may be TokenException
      */
     public void processLine(String line) throws CLIException {
         if (line.trim().equals("?")) {
