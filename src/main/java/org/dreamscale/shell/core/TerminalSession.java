@@ -58,17 +58,19 @@ public class TerminalSession {
     private String toOutputString(TalkMessageDto response) {
         String output = "";
 
-        Map<String, Object> props = (Map<String, Object>) response.getData();
-
         if (response.getMessageType().equals(SimpleStatusDto.class.getSimpleName())) {
-            output = props.get("status") + ": "+ (String) props.get("message");
+            SimpleStatusDto status = (SimpleStatusDto) response.getData();
+            output = status.getStatus() + ": "+ status.getMessage();
         } else if (response.getMessageType().equals(GridTableResults.class.getSimpleName())) {
-            output = (String) props.get("display");
+            GridTableResults table = (GridTableResults) response.getData();
+            output = table.getDisplay();
         } else if (response.getMessageType().equals(GridStatusSummaryDto.class.getSimpleName())) {
-            output = props.get("message") + "\n";
-            output += ((Map<String, Object>) props.get("activitySummary")).get("display");
+            GridStatusSummaryDto summary = (GridStatusSummaryDto)response.getData();
+
+            output = summary.getMessage() + "\n";
+            output += summary.getActivitySummary().getDisplay();
         } else {
-            output = props.toString();
+            output = response.getData().toString();
         }
 
         return output;
