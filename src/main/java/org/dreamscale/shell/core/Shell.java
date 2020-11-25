@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 public class Shell {
 
-    private final TerminalSession terminalSession;
+    private final TerminalCircuit terminalCircuit;
     private final ShellFactory shellFactory;
     private final String introText;
 
@@ -18,14 +18,14 @@ public class Shell {
 
     private Throwable lastException = null;
 
-    public Shell(ShellFactory shellFactory, List<String> path, String introText, ConsoleIO consoleIO, TerminalSession terminalSession) {
+    public Shell(ShellFactory shellFactory, List<String> path, String introText, ConsoleIO consoleIO, TerminalCircuit terminalCircuit) {
         this.shellFactory = shellFactory;
         this.introText = introText;
 
         this.path = path;
 
         this.io = consoleIO;
-        this.terminalSession = terminalSession;
+        this.terminalCircuit = terminalCircuit;
     }
 
     public void commandLoop() {
@@ -79,7 +79,7 @@ public class Shell {
         if (isInRootContext() && isActivityContext(discriminator)) {
             shellFactory.createSubShell(this, discriminator).commandLoop();
         } else {
-            String output = terminalSession.run(path, discriminator, tokens);
+            String output = terminalCircuit.run(path, discriminator, tokens);
 
             io.output(output);
         }

@@ -34,18 +34,18 @@ public class ShellFactory {
     public Shell createRootShell() {
         ConsoleIO io = new ConsoleIO();
 
-        TerminalSession terminalSession = new TerminalSession(terminalClient);
+        TerminalCircuit terminalCircuit = new TerminalCircuit(terminalClient);
 
         List<String> path = new ArrayList<>();
         path.add("torchie");
 
-        return new Shell(this, path, String.format(HINT_FORMAT, APP_NAME, serverUri), io, terminalSession);
+        return new Shell(this, path, String.format(HINT_FORMAT, APP_NAME, serverUri), io, terminalCircuit);
     }
 
     public Shell createSubShell(Shell parent, String subpath) {
         List<String> newPath = new ArrayList<>(parent.getPath());
         newPath.add(subpath);
 
-        return new Shell(this, newPath, String.format(SUBSHELL_CONTEXT, subpath), parent.getIo(), parent.getTerminalSession() );
+        return new Shell(this, newPath, String.format(SUBSHELL_CONTEXT, subpath), parent.getIo(), parent.getTerminalCircuit() );
     }
 }

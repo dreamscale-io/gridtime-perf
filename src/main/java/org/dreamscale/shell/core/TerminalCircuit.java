@@ -11,18 +11,24 @@ import org.dreamscale.exception.BadRequestException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class TerminalSession {
+public class TerminalCircuit {
 
     private TerminalClient terminalClient;
 
+    private final TerminalCircuitDto activeCircuit;
+
+
     private CommandManualDto manual;
+
+
 
     private static final int CMD_PAD_SIZE = 10;
 
-    public TerminalSession(TerminalClient terminalClient) {
+    public TerminalCircuit(TerminalClient terminalClient) {
         this.terminalClient = terminalClient;
+
+        activeCircuit = terminalClient.createCircuit();
     }
 
     public String run(List<String> path, String discriminator, List<Token> tokens) {
@@ -42,7 +48,7 @@ public class TerminalSession {
         try {
             command = Command.fromString(discriminator);
 
-            TalkMessageDto response = terminalClient.runCommand(new CommandInputDto(command, args));
+            TalkMessageDto response = terminalClient.runCommand(activeCircuit.getCircuitName(), new CommandInputDto(command, args));
 
             output = toOutputString(response);
         } catch (BadRequestException brex) {
